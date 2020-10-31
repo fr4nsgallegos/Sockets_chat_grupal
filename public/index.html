@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Whatsapp Web</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	  	<link rel="shortcut icon" href="image/favicon.png" type="image/png">
+	  	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CRoboto:300,400,500" media="all">
+
+	<link href='https://fonts.googleapis.com/css?family=Lobster+Two:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<style>
+	
+
+.caja::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.caja::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+.caja::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}
+
+
+	/**{outline: solid 1px rgba(255,0,0,0.3)}*/
+	
+	h1,h2,h3,h4,h5,h6{font-family: 'Lobster Two'; font-weight: 700;}
+	p{font-family: 'Open Sans', sans-serif;}
+
+		.fondo{
+			/*background-image:url('https://s-media-cache-ak0.pinimg.com/236x/de/3e/78/de3e783478b78f1699dfe1f574d60cbc.jpg'); background-repeat: repeat; width: 100%; height: 100%; z-index: -200; position: absolute; top: 0px; left:0px;
+			*/
+			background-color: #F5F5F5;}
+		.inicio{background-color: rgba(255,255,255,0.7); padding: 30px; border:8px solid #000; outline: 14px solid #319177;}
+		.inicio h1{font-size: 50px;}
+		.inicio p{font-size: 25px;}
+
+		.usuario {max-width: 50px;}
+		.encabezado>div:first-child{max-width: 50px; min-height: 50px; overflow: hidden; border-radius: 100%; display: inline-block; margin-left: 20px; vertical-align: top;}
+		.encabezado { background-color: #fff; padding: 10px;}
+		.encabezado i {margin-right: 20px;}
+		.encabezado p{max-width: 500px; display: inline-block; margin-left: 10px; vertical-align: top;}
+		.lab{font-size: 20px; font-weight: 600;}
+		.usuarios-conectados{height: 385px; overflow-y:scroll;}
+		.mensajes-enviados{height: 360px; overflow-y:scroll; margin-top: 10px; padding: 10px;}
+		
+		.mensajes-enviados, .mensajes-enviados #lista_mensajes, .usuarios-conectados, #lista_conectados
+		{
+		    transform:rotateX(180deg);
+		    -ms-transform:rotateX(180deg); /* IE 9 */
+		    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+		}
+		
+		.nombre-de-usuario{font-family: 'Lobster Two'; font-weight:700; font-size: 20px; max-width: 140px; overflow: auto; text-align: center;}
+		.caja{/*background-image:url('https://s-media-cache-ak0.pinimg.com/236x/de/3e/78/de3e783478b78f1699dfe1f574d60cbc.jpg'); background-repeat: repeat;*/
+		background-color: #F5F5F5;}
+		#chat>div>div{border:3px solid #000;}
+		
+		.escribe{margin-top: 10px;}
+		#bienvenida
+		{
+			border: 1px solid #CCC;
+			max-width: 700px;
+			margin:auto;
+			margin-top: 200px;
+		}
+		#chat
+		{
+			
+			padding: 60px 30px;
+			width:100%;
+			height: 800px;
+			display: none;
+			background-color: #319177;
+				}
+		.c_negra{background-color: #000; color:#fff; font-family: 'Open Sans'; font-size: 15px; margin-top: 10px;}		
+		.estilo-usuarios{font-family: 'Open Sans' ; font-weight: 700; margin:10px 8px; text-align: center; border:3px solid #000; font-style: bold; background-color: rgba(255,255,255,0.8); font-size: 20px;}
+
+	.mensaje-chat {background-color: rgba(255,255,255,0.8); border:1px solid #333333; padding: 10px; border-radius: 5px; margin-top: 8px;}
+	.nombre-en-chat {background-color: #000; color:#fff; font-size: 17px;}
+	
+	.elige{ margin:auto; margin-bottom: 80px;}	
+	.rojo{width: 20px; height: 20px; border-radius: 100%; background-color: #ff0000;}
+
+	button {display: none; margin:auto; background-color: #000; color:#fff; margin-top: 15px; border-radius: 5px; font-family: 'Open Sans'; padding: 8px 20px; border: none !important;}
+	
+	.facebook{background-color:#fff; margin-top: 20px; padding: 8px; text-align: center; outline: 4px solid #fff;}
+	.salida{display:block !important; margin-bottom: 20px;}
+
+		@media screen and (max-width: 600px){
+			#bienvenida{margin-top:120px; max-width: 90%;}
+			.inicio h1{font-size: 40px;}
+			.inicio p{font-size: 20px;}
+			.inicio{padding: 18px; border:8px solid #000; outline: 14px solid #319177;}
+			button {display: block;}
+
+			.encabezado i ,.c_negra, .usuarios-conectados, .caja-lab{display: none;}
+
+			#chat {padding: 20px 5px;}
+			
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="bienvenida" class="text-center">
+		<div class="fondo"></div>
+		<div class="inicio">
+		<h1>Bienvenido!</h1>
+		<p>Por favor ingresa tu nombre</p>
+		<input type="text" id="nombre" class="form-control">
+		<button onclick="guardarNombre()">Entrar</button>
+		</div>
+		</div>
+
+	<div id="chat" > <!--Empieza chat-->
+		
+		<!--<div>
+			<div class="rojo"></div>
+		</div>-->
+		<div class="col-md-12"><button class="pull-right salida" onclick="salir()">Salir</button></div>
+		<div class="col-md-4">
+		<div class="encabezado">
+		<div>
+			<img class="float-left usuario" src="https://image.freepik.com/iconos-gratis/la-imagen-del-usuario-con-el-fondo-negro_318-34564.jpg">
+		</div>	
+		<p class="nombre-de-usuario"> </p>
+			<i class="glyphicon glyphicon-option-vertical pull-right" aria-hidden="true"></i>
+			<i class="glyphicon glyphicon-list pull-right" aria-hidden="true"></i>			
+		</div>	
+		<div class="c_negra text-center">Mira quien se conectó!</div>
+		<div class="usuarios-conectados caja"> <!--comienza usuarios conectados-->
+				
+			<ul id="lista_conectados" class="list-group"></ul>
+
+		</div>  <!--termina usuarios conectados-->
+		</div>
+		<div class="col-md-8">
+			<div class="encabezado caja-lab">
+			<div>
+				<img class="usuario"src="https://i.pinimg.com/736x/36/06/d1/3606d11ba67e1241c998764869e43fde.jpg">
+			</div>	
+				<p class="lab">Computación paralela y distribuida</p>
+				<i class="glyphicon glyphicon-option-vertical pull-right" aria-hidden="true"></i>
+			    <i class="glyphicon glyphicon-list pull-right" aria-hidden="true"></i>
+			</div>
+			<div class="mensajes-enviados caja">
+				<ul id="lista_mensajes" class="list-group"></ul>
+			</div>
+			<div class="escribe">
+		<input type="text" id="mensaje" class="form-control" placeholder="Escribe tus mensajes aquí...">
+		
+			</div>
+			<button onclick="enviarMensaje()">Enviar mensaje</button>
+			<div class=facebook>			
+		<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+</div>
+		</div>
+		
+	</div> <!--Termina chat-->
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1701390036777057',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+	<script>
+		var socket = io('/');
+		var nombre;
+		var ip;			
+
+		
+
+		function guardarNombre()
+		{
+			nombre = $('#nombre').val();
+			$('#bienvenida').hide();
+			$('#chat').show();
+			usuario = $('#nombre').val();	
+			$('p.nombre-de-usuario').html(nombre);
+			
+			
+		}
+
+		function salir(){
+
+			
+
+	}	
+		
+
+		  function nombreUsuario(){
+
+		  	socket.emit('conectado','<span>'+ $('#nombre').val() +'</span>');
+		  	$(usuario).val('');
+		  	$(usuario).focus();
+		  }
+
+		  
+
+		  $(document).ready(function() 
+            {    
+           
+              $('#nombre').keypress(function(e){   
+               if(e.which == 13){      
+                 guardarNombre(); 
+                 nombreUsuario();     
+               }   
+              });
+               $('#mensaje').keypress(function(e){   
+               if(e.which == 13){  			
+
+                 enviarMensaje();      
+               } 
+              
+
+              });   
+			
+
+                        
+              }); 
+		
+
+
+
+		// var main=function(){
+		//	$(".rojo").on("click", function() {
+		//	    $(".nombre-en-chat").css("background", "red");
+		//	})
+		//}
+		//$(document).ready(main)	
+
+			function getIP(){
+				$.getJSON("http://jsonip.com?callback=?", function (data) {
+				console.log(data.ip)
+				ip_ = data.ip;
+				});		
+				return ip_;
+			}
+
+				var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+		function enviarMensaje()
+		{
+			ip = getIP()
+			var dt = new Date();
+			var time = dt.getDate() + " de "+ meses[dt.getMonth()] + " "+ dt.getFullYear() + ", " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+
+			socket.emit('chat', "<span class='label nombre-en-chat'>" +  nombre + "<span style='font-size:10px;'>  (" + ip + ")</span>" + "</span> : " + $('#mensaje').val() + "<span style='float:right; font-size: 12px;color: #909090;font-weight: 600;'>   " + time + "</span>");
+			$('#mensaje').val('');
+			$('#mensaje').focus();
+		}
+
+		socket.on('alguien_conectado',function(_user){
+			$('#lista_conectados').append('<li class=" estilo-usuarios">'+ _user +'</li>');
+
+		});
+
+		socket.on('nuevo_mensaje', function (_msg)
+		{
+			$('#lista_mensajes').append('<li class="mensaje-chat">' + _msg + '</li>');
+
+
+		});
+
+
+	</script>
+</body>
+</html>

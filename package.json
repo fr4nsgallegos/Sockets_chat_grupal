@@ -1,0 +1,28 @@
+{
+  "name": "whatsapp",
+  "version": "1.0.0",
+  "description": "chat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://SaraGabriela@github.com/SaraGabriela/Whatsapp-chat.git"
+  },
+  "author": "Sara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SaraGabriela/Whatsapp-chat/issues"
+  },
+  "homepage": "https://github.com/SaraGabriela/Whatsapp-chat#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "socket.io": "^1.7.4"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {}
+}
